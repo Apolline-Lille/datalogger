@@ -47,18 +47,20 @@ for line in f:
   index=int(values[2]) #sensor, see colnames
   value=values[3]
   if(index==1):
-    #prm[index]=
-    print 'get record date'
+    print 'get record time'
+    current_time=time.localtime()
     print 'clear module array'
   print 'add sensor prms in array'
-  #setup file name
+  #prm[index]=
+  #write to file
   if(index==12):
     print 'generate module line from array'
-    line=record
+    str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
+    line=module+" @ "+str_time+"\t"+record
     print line
+    #setup file name from date
+    file_name=time.strftime('%Y_%m_%d.txt',current_time)
     #write to file
     f=open(file_name,"a")
     f.write(line)
     f.close()
-    #setup file name from date
-    file_name=time.strftime('%Y_%m_%d.txt',time.localtime())
