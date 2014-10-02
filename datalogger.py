@@ -10,6 +10,11 @@ f=open('test.txt', 'r')
 for line in f:
   if(len(line)>12):
     print "line=", line
+    values=line.split('|')
+    print 'module=', values[0]
+    print 'record=', values[1]
+    print 'index=',  values[2]
+    print 'value=',  values[3]
 
 quit()
 
