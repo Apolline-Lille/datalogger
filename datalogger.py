@@ -4,6 +4,14 @@ import serial
 import string
 import time
 
+#tail -n 24 2014_10_02.txt > test.txt
+
+f=open('test.txt', 'r')
+for line in f:
+  print "line=", line
+
+quit()
+
 serialDev='/dev/ttyUSB0'
 file_name="2014_10_01.txt"
 
@@ -29,8 +37,11 @@ while(True):
   line=ser.readline()
   #show
   print line
-  #setup file name from date
-  file_name=time.strftime('%Y_%m_%d.txt',time.localtime())
+  #get information
+  values=strsplit(line,'|')
+  if(i==12):
+    #setup file name from date
+    file_name=time.strftime('%Y_%m_%d.txt',time.localtime())
   #write to file
   f=open(file_name,"a")
   f.write(line)
