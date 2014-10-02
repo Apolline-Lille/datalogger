@@ -8,7 +8,8 @@ import time
 
 f=open('test.txt', 'r')
 for line in f:
-  print "line=", line
+  if(len(line)>12):
+    print "line=", line
 
 quit()
 
