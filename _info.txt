@@ -4,3 +4,11 @@ sudo echo 'sudo warmup'; sudo nohup ./datalogger.py &
 ps aux | grep datalogger.py
 #kill process
 ##sudo kill 1234
+
+exit
+
+#test
+
+head -n 128 2014_10_01.txt > test.txt 
+
+./datalogger.py
