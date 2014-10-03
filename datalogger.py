@@ -15,8 +15,10 @@ import time
 ##ser = serial.Serial(serialDev, 115200, timeout=67)
 ##print 'pack module lines from ', serialDev
 
-record=range(13) #12 sensors and others
-#value=
+#sensor parameter arrays
+nb=13 #12 sensors and others
+record=range(nb)
+value=range(nb)
 
 #get current time
 current_time=time.localtime()
@@ -47,14 +49,13 @@ for line in f:
   values=line.split('|')
   module=values[0]
   index=int(values[2]) #sensor, see colnames
-  record[index]=int(values[1])
-  value=values[3]
   if(index==1): #new record start
     print 'get record time'
     current_time=time.localtime()
     print 'clear module array'
-  print 'add sensor prms in array'
-  #prm[index]=
+  #add sensor parameters in arrays
+  record[index]=int(values[1])
+  value[index]=values[3].replace("\n","")
   #write to file
   if(index==12): #new record stop
     print 'generate module line from array'
