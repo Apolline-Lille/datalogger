@@ -18,9 +18,9 @@ print str_time
 #setup file name from date
 file_name=time.strftime('%Y_%m_%d.txt',current_time)
 #write to file
-f=open(file_name,"a")
-f.write(str_time)
-f.close()
+fo=open(file_name,"a")
+fo.write(str_time)
+fo.close()
 
 print 'start reading serial ...'
 
@@ -32,6 +32,6 @@ while(True):
   #setup file name from date
   file_name=time.strftime('%Y_%m_%d.txt',time.localtime())
   #write to file
-  f=open(file_name,"a")
-  f.write(line)
-  f.close()
+  fo=open(file_name,"a")
+  fo.write(line)
+  fo.close()
