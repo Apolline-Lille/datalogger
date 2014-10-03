@@ -28,11 +28,11 @@ f.close()
 
 ##print 'start reading serial ...'
 
-##while(True):
+##while(True): #loop on both sensors and time
 ##  #wait and get data
 ##  line=ser.readline()
 
-f=open('test.txt', 'r') #test
+f=open('test.txt', 'r') #test#
 for line in f:
 
   #show
@@ -46,14 +46,14 @@ for line in f:
   record=values[1]
   index=int(values[2]) #sensor, see colnames
   value=values[3]
-  if(index==1):
+  if(index==1): #new record start
     print 'get record time'
     current_time=time.localtime()
     print 'clear module array'
   print 'add sensor prms in array'
   #prm[index]=
   #write to file
-  if(index==12):
+  if(index==12): #new record stop
     print 'generate module line from array'
     str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
     line=module+" @ "+str_time+"\t"+record
