@@ -50,9 +50,13 @@ for line in f:
   module=values[0]
   index=int(values[2]) #sensor, see colnames
   if(index==1): #new record start
-    print 'get record time'
+    #get record time
     current_time=time.localtime()
-    print 'clear module array'
+    #clear module array
+    for i in xrange(0,len(record)):
+      record[i]=0
+    for i in xrange(0,len(value)):
+      value[i]=''
   #add sensor parameters in arrays
   record[index]=int(values[1])
   value[index]=values[3].replace("\n","")
