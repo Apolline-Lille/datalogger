@@ -9,7 +9,6 @@ exit
 
 #test
 
-tail -n 24 2014_10_02.txt > test.txt
-tail -n `echo '24*5' | bc` 2014_10_02.txt > test.txt
+head -n 128 2014_10_01.txt > test.txt 
 
 ./datalogger.py
