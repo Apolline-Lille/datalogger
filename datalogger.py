@@ -24,15 +24,19 @@ value=range(nb)
 current_time=time.localtime()
 str_time=time.strftime('%Y/%m/%d %H:%M:%S\n',current_time)
 print str_time
-#setup file name from date
+
+#setup file names from date
 file_name=time.strftime('%Y_%m_%d.txt',current_time)
+raw_file_name=time.strftime('%Y_%m_%d.raw',current_time)
+
 #write to file
 f=open(file_name,"a")
 f.write(str_time)
 f.close()
 
-##print 'start reading serial ...'
+iteration=0
 
+##print 'start reading serial ...'
 ##while(True): #loop on both sensors and time
 ##  #wait and get data
 ##  line=ser.readline()
@@ -41,7 +45,11 @@ f=open('test.txt', 'r') #test#
 for line in f:
 
   #show
-  print line
+  ##print line
+  #write to raw file
+  f=open(raw_file_name,"a")
+  f.write(line)
+  f.close()
   #skip empty lines
   if(len(line)<12):
     continue
@@ -62,16 +70,25 @@ for line in f:
   value[index]=values[3].replace("\n","")
   #write to file
   if(index==12): #new record stop
-    print 'generate module line from array'
+    #generate module line from array
     str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
-    line=module+" @ "+str_time+"\t"+str(record[index])
+    line=module+" @ "+str_time+"\t"+str(iteration)
+    for i in xrange(5,len(value)):
+      line+="\t"+value[i]
+    line+="\t"+str(record[index])
+    line+="\n"
     print line
     #setup file name from date
     file_name=time.strftime('%Y_%m_%d.txt',current_time)
+    raw_file_name=time.strftime('%Y_%m_%d.raw',current_time)
     #write to file
     f=open(file_name,"a")
     f.write(line)
     f.close()
+    #next record index
+    iteration+=1
+
+quit()
 
 print "index=",index
 print "record=",record
