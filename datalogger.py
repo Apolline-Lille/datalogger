@@ -28,11 +28,25 @@ print str_time
 #setup file names from date
 file_name=time.strftime('%Y_%m_%d.txt',current_time)
 raw_file_name=time.strftime('%Y_%m_%d.raw',current_time)
+info_file_name=time.strftime('%Y_%m_%d.info',current_time)
 
-#write to file
-f=open(file_name,"a")
-f.write(str_time)
-f.close()
+#write to information file
+fi=open(info_file_name,"a")
+fi.write(str_time)
+
+#get module start-up lines
+
+f=open('test.txt', 'r') #test#
+for line in f:
+  #write to raw file
+  fr=open(raw_file_name,"a")
+  fr.write(line)
+  fr.close()
+  #write to information file
+  fi.write(line)
+  if(line.find('|')>0): #parameter line if containing character '|'
+    break
+fi.close() #information file
 
 iteration=0
 
@@ -41,17 +55,16 @@ iteration=0
 ##  #wait and get data
 ##  line=ser.readline()
 
-f=open('test.txt', 'r') #test#
 for line in f:
 
   #show
   ##print line
   #write to raw file
-  f=open(raw_file_name,"a")
-  f.write(line)
-  f.close()
+  fr=open(raw_file_name,"a")
+  fr.write(line)
+  fr.close()
   #skip empty lines
-  if(len(line)<12):
+  if(len(line)<6):
     continue
   #get information
   values=line.split('|')
@@ -82,11 +95,13 @@ for line in f:
     file_name=time.strftime('%Y_%m_%d.txt',current_time)
     raw_file_name=time.strftime('%Y_%m_%d.raw',current_time)
     #write to file
-    f=open(file_name,"a")
-    f.write(line)
-    f.close()
+    fo=open(file_name,"a")
+    fo.write(line)
+    fo.close()
     #next record index
     iteration+=1
+
+f.close() #previous recorded file #test#
 
 quit()
 
