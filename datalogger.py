@@ -15,6 +15,9 @@ import time
 ##ser = serial.Serial(serialDev, 115200, timeout=67)
 ##print 'pack module lines from ', serialDev
 
+record=range(13) #12 sensors and others
+#value=
+
 #get current time
 current_time=time.localtime()
 str_time=time.strftime('%Y/%m/%d %H:%M:%S\n',current_time)
@@ -43,8 +46,8 @@ for line in f:
   #get information
   values=line.split('|')
   module=values[0]
-  record=values[1]
   index=int(values[2]) #sensor, see colnames
+  record[index]=int(values[1])
   value=values[3]
   if(index==1): #new record start
     print 'get record time'
@@ -56,7 +59,7 @@ for line in f:
   if(index==12): #new record stop
     print 'generate module line from array'
     str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
-    line=module+" @ "+str_time+"\t"+record
+    line=module+" @ "+str_time+"\t"+str(record[index])
     print line
     #setup file name from date
     file_name=time.strftime('%Y_%m_%d.txt',current_time)
@@ -64,3 +67,7 @@ for line in f:
     f=open(file_name,"a")
     f.write(line)
     f.close()
+
+print "index=",index
+print "record=",record
+print "value=",value
