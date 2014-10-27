@@ -9,6 +9,11 @@ import time
 #  "TGS4161","TGS2620","MICS2610","TGS2602","MICS2710","TGS2442",
 #  "record")
 
+#TODO
+#1. move code and .git to ../../
+#2. data (raw,info)file name as functions (e.g. ./2014/10/MODULE_DATE.???)
+#3. CLI serialDev (e.g --device=/dev/ttyUSB0)
+
 serialDev='/dev/ttyUSB0'
 ser = serial.Serial(serialDev, 115200, timeout=67)
 print 'pack module lines from ', serialDev

@@ -7,6 +7,11 @@ ps aux | grep datalogger.py
 
 exit
 
+#backup
+rsync -var ~/data.Xsensor 134.206.175.222:~/www/
+##or
+rsync -var /home/temp/data.Xsensor 134.206.175.222:~/www/
+
 #test
 
 head -n 128 2014_10_01.txt > test.txt 
