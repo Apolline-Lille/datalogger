@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+version='v0.1.0'
+
 import serial
 import string
 import time
@@ -13,6 +15,7 @@ import time
 #1. move code and .git to ../../
 #2. data (raw,info)file name as functions (e.g. ./2014/10/MODULE_DATE.???)
 #3. CLI serialDev (e.g --device=/dev/ttyUSB0)
+#o. CLI help and version print
 
 serialDev='/dev/ttyUSB0'
 ser = serial.Serial(serialDev, 115200, timeout=67)
