@@ -152,3 +152,9 @@ while(True): #loop on both sensors and time
     fo.close()
     #next record index
     iteration+=1
+  if(serialDev=='test'): #test#
+    if(ser.tell()>1580):
+      break
+
+if(serialDev=='test'): #test#
+  ser.close()
