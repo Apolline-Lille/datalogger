@@ -1,22 +1,27 @@
 #!/usr/bin/python
 
-version='v0.1.1.dev'
+version='v0.2.0'
 
 import serial
 import string
 import time
+import argparse
 
 ##set column names
 #colnames(t)=c("time","index","battery","temperature","humidity",
 #  "TGS4161","TGS2620","MICS2610","TGS2602","MICS2710","TGS2442",
 #  "record")
 
-#TODO
-#1. CLI serialDev (e.g --device=/dev/ttyUSB0)
-#o. CLI help and version print
+#CLI arguments
+parser = argparse.ArgumentParser(usage='%(prog)s [options]')
+parser.add_argument('-d','--device',default='/dev/ttyUSB0', help='USB device name (e.g. /dev/ttyUSB0)')
+parser.add_argument('-v','--version',action='version',version='%(prog)s '+version)
+args = parser.parse_args()
 
+##--device CLI argument
 serialDev='/dev/ttyUSB0'
-##ser = serial.Serial(serialDev, 115200, timeout=67)
+serialDev=args.device
+ser = serial.Serial(serialDev, 115200, timeout=67)
 print 'pack module lines from ', serialDev
 
 #path and file name
@@ -51,11 +56,11 @@ fi=open(info_file_name,"a")
 fi.write(str_time)
 
 #get module start-up lines
-##while(True): #loop on both sensors and time
-##  #wait and get data
-##  line=ser.readline()
-f=open('test.txt', 'r') #test#
-for line in f:
+while(True): #loop on both sensors and time
+  #wait and get data
+  line=ser.readline()
+##f=open('test.txt', 'r') #test#
+##for line in f: #test#
   #write to information file
   fi.write(line)
   if(line.find('|')>0): #parameter line if containing character '|'
@@ -82,11 +87,11 @@ fr.close()
 iteration=0
 
 print 'start reading serial ...'
-##while(True): #loop on both sensors and time
-##  #wait and get data
-##  line=ser.readline()
+while(True): #loop on both sensors and time
+  #wait and get data
+  line=ser.readline()
 
-for line in f: #test#
+##for line in f: #test#
 
   #show
   ##print line
@@ -133,4 +138,4 @@ for line in f: #test#
     #next record index
     iteration+=1
 
-f.close() #previous recorded file #test#
+##f.close() #previous recorded file #test#
