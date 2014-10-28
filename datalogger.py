@@ -12,8 +12,7 @@ import time
 #  "record")
 
 #TODO
-#1. data (raw,info)file name as functions (e.g. ./2014/10/MODULE_DATE.???)
-#2. CLI serialDev (e.g --device=/dev/ttyUSB0)
+#1. CLI serialDev (e.g --device=/dev/ttyUSB0)
 #o. CLI help and version print
 
 serialDev='/dev/ttyUSB0'
@@ -21,17 +20,17 @@ serialDev='/dev/ttyUSB0'
 print 'pack module lines from ', serialDev
 
 #path and file name
-def file_name_base(module_name,current_time):
+def get_file_name_base(module_name,current_time):
   return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
 
-def data_file_name(module_name,current_time):
-  return file_name_base(module_name+'_',current_time)+'.txt'
+def get_data_file_name(module_name,current_time):
+  return get_file_name_base(module_name+'_',current_time)+'.txt'
 
-def raw_file_name(module_name,current_time):
-  return file_name_base(module_name+'_',current_time)+'.raw'
+def get_raw_file_name(module_name,current_time):
+  return get_file_name_base(module_name+'_',current_time)+'.raw'
 
-def info_file_name(current_time):
-  return file_name_base('',current_time)+'.info'
+def get_info_file_name(current_time):
+  return get_file_name_base('',current_time)+'.info'
   
 
 #sensor parameter arrays
@@ -45,7 +44,7 @@ str_time=time.strftime('%Y/%m/%d %H:%M:%S\n',current_time)
 print str_time
 
 #set info file name from date
-info_file_name=info_file_name(current_time)
+info_file_name=get_info_file_name(current_time)
 
 #write to information file
 fi=open(info_file_name,"a")
@@ -68,8 +67,8 @@ values=line.split('|')
 module=values[0]
 
 #set both raw and data file names from both module and date
-file_name=data_file_name(module,current_time)
-raw_file_name=raw_file_name(module,current_time)
+file_name=get_data_file_name(module,current_time)
+raw_file_name=get_raw_file_name(module,current_time)
 
 #open raw file
 fr=open(raw_file_name,"a")
@@ -125,8 +124,8 @@ for line in f: #test#
     line+="\n"
     print line
     #setup file name from date
-    file_name=time.strftime('%Y_%m_%d.txt',current_time)
-    raw_file_name=time.strftime('%Y_%m_%d.raw',current_time)
+    file_name=get_data_file_name(module,current_time)
+    raw_file_name=get_raw_file_name(module,current_time)
     #write to file
     fo=open(file_name,"a")
     fo.write(line)
