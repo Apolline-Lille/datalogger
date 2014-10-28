@@ -32,11 +32,15 @@ current_time=time.localtime()
 info_file_name=get_info_file_name(current_time)
 file_name=get_data_file_name(module,current_time)
 raw_file_name=get_raw_file_name(module,current_time)
-parser = argparse.ArgumentParser(description='log data from libellium/waspmote sensor.'
+parser = argparse.ArgumentParser(
+  description='log data from libellium/waspmote sensor.'
   +' At least, 3 files will be written:'
   +' 1. single information file (.info),'
-  +' 2n3. both one raw sensor ouput (.raw) and one data (.txt) files per day.'
-  ,epilog='example: %(prog)s --device '+serialDev+'  #will write e.g. module #'+module+' as "'+info_file_name+'", "'+file_name+'" and "'+raw_file_name+'" files.'
+  +' 2. one raw sensor ouput (.raw) file per day,'
+  +' 3. one data (.txt) file per day.'
+ ,epilog='example: %(prog)s --device '+serialDev
+  +'  #will write e.g. module #'+module+' data as 1."'
+  +info_file_name+'", 2."'+file_name+'" and 3."'+raw_file_name+'" files.'
   )
 parser.add_argument('-d','--device',default=serialDev, help='USB device name (e.g. '+serialDev+')')
 parser.add_argument('-v','--version',action='version',version='%(prog)s '+version)
