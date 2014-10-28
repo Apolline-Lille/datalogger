@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.2.0'
+version='v0.2.1'
 
 import serial
 import string
@@ -30,6 +30,7 @@ def get_info_file_name(current_time):
 
 #CLI arguments
 serialDev='/dev/ttyUSB0'
+fake='test.raw'
 module='B12345'
 current_time=time.localtime()
 info_file_name=get_info_file_name(current_time)
@@ -45,15 +46,15 @@ parser = argparse.ArgumentParser(
   +'  #will write e.g. module #'+module+' data as 1."'
   +info_file_name+'", 2."'+file_name+'" and 3."'+raw_file_name+'" files.'
   )
-parser.add_argument('-d','--device',default=serialDev, help='USB device name (e.g. '+serialDev+')')
+parser.add_argument('-d','--device',default=serialDev, help='USB device name or '+fake+' (e.g. '+serialDev+')')
 parser.add_argument('-v','--version',action='version',version='%(prog)s '+version)
 args = parser.parse_args()
 
 ##--device CLI argument
 serialDev=args.device
-if(serialDev=='test'): #test#
+if(serialDev==fake): #test#
   print 'test' #test#
-  ser=open('test.txt', 'r') #test#
+  ser=open(fake, 'r') #test#
 else:
   ser=serial.Serial(serialDev, 115200, timeout=67)
 print 'pack module lines from ', serialDev
@@ -104,11 +105,11 @@ fr.close()
 
 iteration=0
 
-if(serialDev=='test'): #test#
-  dev='"test.txt"'
+if(serialDev==fake): #test#
+  mode=fake
 else:
-  dev='serial'
-print 'start reading '+dev+' ...'
+  mode='serial'
+print 'start reading '+mode+' ...'
 while(True): #loop on both sensors and time
   #wait and get data
   line=ser.readline()
@@ -159,5 +160,5 @@ while(True): #loop on both sensors and time
     #next record index
     iteration+=1
 
-if(serialDev=='test'): #test#
+if(serialDev==fake): #test#
   ser.close()
