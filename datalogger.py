@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.1.0'
+version='v0.1.1.dev'
 
 import serial
 import string
@@ -12,14 +12,27 @@ import time
 #  "record")
 
 #TODO
-#1. move code and .git to ../../
-#2. data (raw,info)file name as functions (e.g. ./2014/10/MODULE_DATE.???)
-#3. CLI serialDev (e.g --device=/dev/ttyUSB0)
+#1. data (raw,info)file name as functions (e.g. ./2014/10/MODULE_DATE.???)
+#2. CLI serialDev (e.g --device=/dev/ttyUSB0)
 #o. CLI help and version print
 
 serialDev='/dev/ttyUSB0'
-ser = serial.Serial(serialDev, 115200, timeout=67)
+######ser = serial.Serial(serialDev, 115200, timeout=67)
 print 'pack module lines from ', serialDev
+
+#path and file name
+def file_name_base(module_name,current_time):
+  return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
+
+def data_file_name(module_name,current_time):
+  return file_name_base(module_name+'_',current_time)+'.txt'
+
+def raw_file_name(module_name,current_time):
+  return file_name_base(module_name+'_',current_time)+'.raw'
+
+def info_file_name(current_time):
+  return file_name_base('',current_time)+'.info'
+  
 
 #sensor parameter arrays
 nb=13 #12 sensors and others
@@ -32,13 +45,13 @@ str_time=time.strftime('%Y/%m/%d %H:%M:%S\n',current_time)
 print str_time
 
 #setup file names from date
-file_name=time.strftime('%Y_%m_%d.txt',current_time)
-raw_file_name=time.strftime('%Y_%m_%d.raw',current_time)
-info_file_name=time.strftime('%Y_%m_%d.info',current_time)
+info_file_name=info_file_name(current_time)
 
 #write to information file
 fi=open(info_file_name,"a")
 fi.write(str_time)
+
+exit
 
 #get module start-up lines
 while(True): #loop on both sensors and time
@@ -46,15 +59,23 @@ while(True): #loop on both sensors and time
   line=ser.readline()
 ##f=open('test.txt', 'r') #test#
 ##for line in f:
-  #write to raw file
-  fr=open(raw_file_name,"a")
-  fr.write(line)
-  fr.close()
   #write to information file
   fi.write(line)
   if(line.find('|')>0): #parameter line if containing character '|'
     break
 fi.close() #information file
+
+#set both raw and data file names
+
+
+#open raw file
+fr=open(raw_file_name,"a")
+#copy info in raw file
+fi=open(info_file_name, 'r')
+for line in fi:
+  #write to raw file
+  fr.write(line)
+fr.close()
 
 iteration=0
 
