@@ -108,6 +108,8 @@ print 'start reading serial ...'
 while(True): #loop on both sensors and time
   #wait and get data
   line=ser.readline()
+  #exit at end of file
+  if not line: break
   #show
   ##print line
   #write to raw file
