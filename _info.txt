@@ -1,5 +1,5 @@
 #start recording
-sudo echo 'sudo warmup'; sudo nohup ./datalogger.py &
+sudo echo 'sudo warmup'; sudo nohup ./datalogger.py --device /dev/ttyUSB0 &
 #check process is running
 ps aux | grep datalogger.py
 #kill process
@@ -16,4 +16,4 @@ rsync -var /home/temp/data.Xsensor 134.206.175.222:~/www/
 
 head -n 128 2014_10_01.txt > test.txt 
 
-./datalogger.py
+./datalogger.py --device test.raw
