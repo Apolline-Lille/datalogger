@@ -13,7 +13,7 @@ import argparse
 #  "record")
 
 ##TODO##
-#1. switch test/serial
+#1. switch test/serial :TO TEST on serial
 
 #path and file name
 def get_file_name_base(module_name,current_time):
