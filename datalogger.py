@@ -51,10 +51,11 @@ args = parser.parse_args()
 
 ##--device CLI argument
 serialDev=args.device
-if(serialDev=='test'):
-  print 'test'
+if(serialDev=='test'): #test#
+  print 'test' #test#
+  ser=open('test.txt', 'r') #test#
 else:
-  ser = serial.Serial(serialDev, 115200, timeout=67)
+  ser=serial.Serial(serialDev, 115200, timeout=67)
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
@@ -78,8 +79,6 @@ fi.write(str_time)
 while(True): #loop on both sensors and time
   #wait and get data
   line=ser.readline()
-##f=open('test.txt', 'r') #test#
-##for line in f: #test#
   #write to information file
   fi.write(line)
   if(line.find('|')>0): #parameter line if containing character '|'
@@ -109,9 +108,6 @@ print 'start reading serial ...'
 while(True): #loop on both sensors and time
   #wait and get data
   line=ser.readline()
-
-##for line in f: #test#
-
   #show
   ##print line
   #write to raw file
@@ -156,5 +152,3 @@ while(True): #loop on both sensors and time
     fo.close()
     #next record index
     iteration+=1
-
-##f.close() #previous recorded file #test#
