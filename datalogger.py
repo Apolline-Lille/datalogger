@@ -17,7 +17,7 @@ import time
 #o. CLI help and version print
 
 serialDev='/dev/ttyUSB0'
-######ser = serial.Serial(serialDev, 115200, timeout=67)
+##ser = serial.Serial(serialDev, 115200, timeout=67)
 print 'pack module lines from ', serialDev
 
 #path and file name
@@ -44,29 +44,32 @@ current_time=time.localtime()
 str_time=time.strftime('%Y/%m/%d %H:%M:%S\n',current_time)
 print str_time
 
-#setup file names from date
+#set info file name from date
 info_file_name=info_file_name(current_time)
 
 #write to information file
 fi=open(info_file_name,"a")
 fi.write(str_time)
 
-exit
-
 #get module start-up lines
-while(True): #loop on both sensors and time
-  #wait and get data
-  line=ser.readline()
-##f=open('test.txt', 'r') #test#
-##for line in f:
+##while(True): #loop on both sensors and time
+##  #wait and get data
+##  line=ser.readline()
+f=open('test.txt', 'r') #test#
+for line in f:
   #write to information file
   fi.write(line)
   if(line.find('|')>0): #parameter line if containing character '|'
     break
 fi.close() #information file
 
-#set both raw and data file names
+#set module name
+values=line.split('|')
+module=values[0]
 
+#set both raw and data file names from both module and date
+file_name=data_file_name(module,current_time)
+raw_file_name=raw_file_name(module,current_time)
 
 #open raw file
 fr=open(raw_file_name,"a")
@@ -80,11 +83,11 @@ fr.close()
 iteration=0
 
 print 'start reading serial ...'
-while(True): #loop on both sensors and time
-  #wait and get data
-  line=ser.readline()
+##while(True): #loop on both sensors and time
+##  #wait and get data
+##  line=ser.readline()
 
-##for line in f: #test#
+for line in f: #test#
 
   #show
   ##print line
@@ -131,4 +134,4 @@ while(True): #loop on both sensors and time
     #next record index
     iteration+=1
 
-##f.close() #previous recorded file #test#
+f.close() #previous recorded file #test#
