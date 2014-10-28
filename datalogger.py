@@ -12,6 +12,9 @@ import argparse
 #  "TGS4161","TGS2620","MICS2610","TGS2602","MICS2710","TGS2442",
 #  "record")
 
+##TODO##
+#1. switch test/serial
+
 #path and file name
 def get_file_name_base(module_name,current_time):
   return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
@@ -48,7 +51,10 @@ args = parser.parse_args()
 
 ##--device CLI argument
 serialDev=args.device
-ser = serial.Serial(serialDev, 115200, timeout=67)
+if(serialDev=='test'):
+  print 'test'
+else:
+  ser = serial.Serial(serialDev, 115200, timeout=67)
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
