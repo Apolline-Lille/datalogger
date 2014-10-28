@@ -104,7 +104,11 @@ fr.close()
 
 iteration=0
 
-print 'start reading serial ...'
+if(serialDev=='test'): #test#
+  dev='"test.txt"'
+else:
+  dev='serial'
+print 'start reading '+dev+' ...'
 while(True): #loop on both sensors and time
   #wait and get data
   line=ser.readline()
@@ -154,9 +158,6 @@ while(True): #loop on both sensors and time
     fo.close()
     #next record index
     iteration+=1
-  if(serialDev=='test'): #test#
-    if(ser.tell()>1580):
-      break
 
 if(serialDev=='test'): #test#
   ser.close()
