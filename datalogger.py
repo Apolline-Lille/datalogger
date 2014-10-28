@@ -12,18 +12,6 @@ import argparse
 #  "TGS4161","TGS2620","MICS2610","TGS2602","MICS2710","TGS2442",
 #  "record")
 
-#CLI arguments
-parser = argparse.ArgumentParser(usage='%(prog)s [options]')
-parser.add_argument('-d','--device',default='/dev/ttyUSB0', help='USB device name (e.g. /dev/ttyUSB0)')
-parser.add_argument('-v','--version',action='version',version='%(prog)s '+version)
-args = parser.parse_args()
-
-##--device CLI argument
-serialDev='/dev/ttyUSB0'
-serialDev=args.device
-ser = serial.Serial(serialDev, 115200, timeout=67)
-print 'pack module lines from ', serialDev
-
 #path and file name
 def get_file_name_base(module_name,current_time):
   return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
@@ -36,7 +24,28 @@ def get_raw_file_name(module_name,current_time):
 
 def get_info_file_name(current_time):
   return get_file_name_base('',current_time)+'.info'
-  
+
+#CLI arguments
+serialDev='/dev/ttyUSB0'
+module='B12345'
+current_time=time.localtime()
+info_file_name=get_info_file_name(current_time)
+file_name=get_data_file_name(module,current_time)
+raw_file_name=get_raw_file_name(module,current_time)
+parser = argparse.ArgumentParser(description='log data from libellium/waspmote sensor.'
+  +' At least, 3 files will be written:'
+  +' 1. single information file (.info),'
+  +' 2n3. both one raw sensor ouput (.raw) and one data (.txt) files per day.'
+  ,epilog='example: %(prog)s --device '+serialDev+'  #will write e.g. module #'+module+' as "'+info_file_name+'", "'+file_name+'" and "'+raw_file_name+'" files.'
+  )
+parser.add_argument('-d','--device',default=serialDev, help='USB device name (e.g. '+serialDev+')')
+parser.add_argument('-v','--version',action='version',version='%(prog)s '+version)
+args = parser.parse_args()
+
+##--device CLI argument
+serialDev=args.device
+ser = serial.Serial(serialDev, 115200, timeout=67)
+print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
 nb=13 #12 sensors and others
