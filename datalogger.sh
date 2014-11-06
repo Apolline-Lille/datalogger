@@ -1,4 +1,14 @@
 #!/bin/bash
 
-nohup ./datalogger.py --device /dev/ttyUSB0 &
-nohup ./datalogger.py --device /dev/ttyUSB1 &
+for dev in /dev/ttyUSB?
+do
+  echo 'start logging '$dev
+  nohup ./datalogger.py --device $dev &
+  sleep 1
+done
+
+#wait
+sleep 2
+
+#check
+ps aux | grep datalogger.py
