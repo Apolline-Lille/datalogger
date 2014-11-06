@@ -12,9 +12,6 @@ import argparse
 #  "TGS4161","TGS2620","MICS2610","TGS2602","MICS2710","TGS2442",
 #  "record")
 
-##TODO##
-#1. switch test/serial :TO TEST on serial
-
 #path and file name
 def get_file_name_base(module_name,current_time):
   return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
