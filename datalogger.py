@@ -101,19 +101,22 @@ while(True): #loop on both sensors and time
   #exit at end of file
   if not line: break
   #show
-  print "|",line,"|"
+  ##print "|",line,"|"
   #write to raw file
   fr=open(raw_file_name,"a")
   fr.write(line)
   fr.close()
   #add sensor parameters in arrays
-  record[1]=line
-  value[1]=float(line)
+  value[1]=line.replace("\n","")
+  print value[1]
+  record[1]=float(value[1])
   #generate module line from arrays
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
   line=module+" @ "+str_time+"\t"+str(iteration)
-  line+="\t"+record[1]
-  line+="\t"+str(value[1])
+#  line+="\t"+value[1]
+  line+="\t"+str(record[1])
+  line+="\n"
+  print "|",line,"|"
   #write to file
   fo=open(file_name,"a")
   fo.write(line)
