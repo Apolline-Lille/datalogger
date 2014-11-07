@@ -117,10 +117,10 @@ while(True): #loop on both sensors and time
   #generate module line from arrays
   current_time=time.localtime()
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
-  line=module+" @ "+str_time+"\t"+str(iteration)
+  line=module+";"+str_time+";"+str(iteration)
   for i in range(0,nb-1):
-    line+="\t"+value[i]
-#    line+="\t"+str(record[i])
+    line+=";"+value[i]
+#    line+=";"+str(record[i])
   line+="\n"
   print line
   #write to file
