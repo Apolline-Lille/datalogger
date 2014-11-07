@@ -93,10 +93,8 @@ print 'start writing/reading '+mode+' ...'
 while(True): #loop on both sensors and time
   #ask for data
 ## if(serialDev!=fake): #!test#
-  print 'write'
   ser.write("N\r")
   #wait and get data
-  print 'read'
   line=ser.readline()
   #exit at end of file
   if not line: break
@@ -108,7 +106,6 @@ while(True): #loop on both sensors and time
   fr.close()
   #add sensor parameters in arrays
   value[1]=line.replace("\r\n","")
-  print "|",value[1],"|"
   record[1]=float(value[1])
   #generate module line from arrays
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
@@ -116,7 +113,7 @@ while(True): #loop on both sensors and time
   line+="\t"+value[1]
   line+="\t"+str(record[1])
   line+="\n"
-  print "|",line,"|"
+  print line
   #write to file
   fo=open(file_name,"a")
   fo.write(line)
