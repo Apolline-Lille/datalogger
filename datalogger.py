@@ -8,9 +8,12 @@ import time
 import argparse
 
 ##set column names
-#colnames(t)=c("time","index","battery","temperature","humidity",
-#  "TGS4161","TGS2620","MICS2610","TGS2602","MICS2710","TGS2442",
-#  "record")
+#colnames(t)=c("time","index","temperature","CO2","lamp")
+
+#?	Alphasense NDIR
+#N	1281.1
+#T	26.6
+#V	 400
 
 #path and file name
 def get_file_name_base(module_name,current_time):
@@ -28,13 +31,13 @@ def get_info_file_name(current_time):
 #CLI arguments
 serialDev='/dev/ttyUSB0'
 fake='test.raw'
-module='B12345'
+module='NDIR_CO2'
 current_time=time.localtime()
 info_file_name=get_info_file_name(current_time)
 file_name=get_data_file_name(module,current_time)
 raw_file_name=get_raw_file_name(module,current_time)
 parser = argparse.ArgumentParser(
-  description='log data from libellium/waspmote sensor.'
+  description='log data from NDIR/CO2 sensor.'
   +' At least, 3 files will be written:'
   +' 1. single information file (.info),'
   +' 2. one raw sensor ouput (.raw) file per day,'
@@ -53,11 +56,11 @@ if(serialDev==fake): #test#
   print 'test' #test#
   ser=open(fake, 'r') #test#
 else:
-  ser=serial.Serial(serialDev, 115200, timeout=67)
+  ser=serial.Serial(serialDev, 19200, timeout=67)
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=13 #12 sensors and others
+nb=4 #3 sensors and others
 record=range(nb)
 value=range(nb)
 
@@ -72,33 +75,13 @@ info_file_name=get_info_file_name(current_time)
 #write to information file
 fi=open(info_file_name,"a")
 fi.write(str_time)
-
-#get module start-up lines
-while(True): #loop on both sensors and time
-  #wait and get data
-  line=ser.readline()
-  #write to information file
-  fi.write(line)
-  if(line.find('|')>0): #parameter line if containing character '|'
-    break
+fi.write(serialDev)
+fi.write(module)
 fi.close() #information file
-
-#set module name
-values=line.split('|')
-module=values[0]
 
 #set both raw and data file names from both module and date
 file_name=get_data_file_name(module,current_time)
 raw_file_name=get_raw_file_name(module,current_time)
-
-#open raw file
-fr=open(raw_file_name,"a")
-#copy info in raw file
-fi=open(info_file_name, 'r')
-for line in fi:
-  #write to raw file
-  fr.write(line)
-fr.close()
 
 iteration=0
 
@@ -106,56 +89,38 @@ if(serialDev==fake): #test#
   mode=fake
 else:
   mode='serial'
-print 'start reading '+mode+' ...'
+print 'start writing/reading '+mode+' ...'
 while(True): #loop on both sensors and time
+  #ask for data
+## if(serialDev!=fake): #!test#
+  print 'write'
+  ser.write("N\r")
   #wait and get data
+  print 'read'
   line=ser.readline()
   #exit at end of file
   if not line: break
   #show
-  ##print line
+  print "|",line,"|"
   #write to raw file
   fr=open(raw_file_name,"a")
   fr.write(line)
   fr.close()
-  #skip empty lines
-  if(len(line)<6):
-    continue
-  #get information
-  values=line.split('|')
-  module=values[0]
-  index=int(values[2]) #sensor, see colnames
-  if(index==1): #new record start
-    #get record time
-    current_time=time.localtime()
-    #clear module array
-    for i in xrange(0,len(record)):
-      record[i]=0
-    for i in xrange(0,len(value)):
-      value[i]=''
   #add sensor parameters in arrays
-  record[index]=int(values[1])
-  value[index]=values[3].replace("\n","")
+  record[1]=line
+  value[1]=float(line)
+  #generate module line from arrays
+  str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
+  line=module+" @ "+str_time+"\t"+str(iteration)
+  line+="\t"+record[1]
+  line+="\t"+str(value[1])
   #write to file
-  if(index==12): #new record stop
-    #generate module line from arrays
-    str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
-    line=module+" @ "+str_time+"\t"+str(iteration)
-    line+="\t"+str(value[1])
-    for i in xrange(5,len(value)):
-      line+="\t"+value[i]
-    line+="\t"+str(record[index])
-    line+="\n"
-    print line
-    #setup file name from date
-    file_name=get_data_file_name(module,current_time)
-    raw_file_name=get_raw_file_name(module,current_time)
-    #write to file
-    fo=open(file_name,"a")
-    fo.write(line)
-    fo.close()
-    #next record index
-    iteration+=1
+  fo=open(file_name,"a")
+  fo.write(line)
+  fo.close()
+  #next record index
+  iteration+=1
+  time.sleep(2)
 
 if(serialDev==fake): #test#
   ser.close()
