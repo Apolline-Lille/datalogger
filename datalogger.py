@@ -115,6 +115,7 @@ while(True): #loop on both sensors and time
   #exit at end of file
   if not line: break
   #generate module line from arrays
+  current_time=time.localtime()
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
   line=module+" @ "+str_time+"\t"+str(iteration)
   for i in range(0,nb-1):
@@ -128,7 +129,7 @@ while(True): #loop on both sensors and time
   fo.close()
   #next record index
   iteration+=1
-  time.sleep(2)
+  time.sleep(12)
 
 if(serialDev==fake): #test#
   ser.close()
