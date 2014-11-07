@@ -63,6 +63,10 @@ print 'pack module lines from ', serialDev
 nb=4 #3 sensors and others
 record=range(nb)
 value=range(nb)
+send=range(nb-1)
+send[0]='N'
+send[1]='T'
+send[2]='V'
 
 #get current time
 current_time=time.localtime()
@@ -91,27 +95,31 @@ else:
   mode='serial'
 print 'start writing/reading '+mode+' ...'
 while(True): #loop on both sensors and time
-  #ask for data
+  for i in range(0,nb-1):
+    #ask for data
 ## if(serialDev!=fake): #!test#
-  ser.write("N\r")
-  #wait and get data
-  line=ser.readline()
+    ser.write(send[i]+"\r")
+    #wait and get data
+    line=ser.readline()
+    #exit at end of file
+    if not line: break
+    #show
+    ##print "|",line,"|"
+    #write to raw file
+    fr=open(raw_file_name,"a")
+    fr.write(line)
+    fr.close()
+    #add sensor parameters in arrays
+    value[i]=line.replace("\r\n","")
+    record[i]=float(value[i])
   #exit at end of file
   if not line: break
-  #show
-  ##print "|",line,"|"
-  #write to raw file
-  fr=open(raw_file_name,"a")
-  fr.write(line)
-  fr.close()
-  #add sensor parameters in arrays
-  value[1]=line.replace("\r\n","")
-  record[1]=float(value[1])
   #generate module line from arrays
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
   line=module+" @ "+str_time+"\t"+str(iteration)
-  line+="\t"+value[1]
-  line+="\t"+str(record[1])
+  for i in range(0,nb-1):
+    line+="\t"+value[i]
+#    line+="\t"+str(record[i])
   line+="\n"
   print line
   #write to file
