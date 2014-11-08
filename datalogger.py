@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.2.1'
+version='v0.3.0'
 
 import serial
 import string
@@ -123,6 +123,9 @@ while(True): #loop on both sensors and time
 #    line+=";"+str(record[i])
   line+="\n"
   print line
+  #setup file name from date
+  file_name=get_data_file_name(module,current_time)
+  raw_file_name=get_raw_file_name(module,current_time)
   #write to file
   fo=open(file_name,"a")
   fo.write(line)
