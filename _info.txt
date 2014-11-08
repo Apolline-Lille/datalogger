@@ -5,6 +5,9 @@ ps aux | grep datalogger.py
 #kill process
 ##sudo kill 1234
 
+#plot
+./plot_log.Rsh 2014/11/NDIR_CO2_2014_11_08.txt; evince Rplots.pdf &
+
 exit
 
 #backup
