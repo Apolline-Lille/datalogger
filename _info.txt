@@ -1,12 +1,13 @@
 #start recording
-sudo echo 'sudo warmup'; sudo nohup ./datalogger.py --device /dev/ttyUSB0 &
+echo 'reset' > /dev/ttyACM0; ./datalogger.py --device /dev/ttyACM0
+sudo echo 'sudo warmup'; sudo nohup ./datalogger.py --device /dev/ttyACM0 &
 #check process is running
 ps aux | grep datalogger.py
 #kill process
 ##sudo kill 1234
 
 #plot
-./plot_log.Rsh 2014/11/NDIR_CO2_2014_11_08.txt; evince Rplots.pdf &
+./plot_log.Rsh 2014/11/PID_2014_11_14.txt; evince Rplots.pdf &
 
 exit
 
