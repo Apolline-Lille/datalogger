@@ -21,3 +21,12 @@ rsync -var /home/temp/data.Xsensor 134.206.175.222:~/www/
 head -n 128 2014_10_01.txt > test.txt 
 
 ./datalogger.py --device test.raw
+
+error:
+
+PID;2014/11/14 11:43:10;7074;7
+
+Traceback (most recent call last):
+  File "./datalogger.py", line 110, in <module>
+    line+=";"+value[2]
+IndexError: list index out of range

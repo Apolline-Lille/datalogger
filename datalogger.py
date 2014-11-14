@@ -71,9 +71,9 @@ info_file_name=get_info_file_name(current_time)
 
 #write to information file
 fi=open(info_file_name,"a")
-fi.write(str_time)
-fi.write(serialDev)
-fi.write(module)
+fi.write(str_time);    fi.write(" ")
+fi.write(serialDev);   fi.write(" ")
+fi.write(module);      fi.write(" open\n")
 fi.close() #information file
 
 #set both raw and data file names from both module and date
@@ -103,9 +103,24 @@ while(True): #loop on both sensors and time
   value=line.split(";")
 #  print value
 #  record[i]=float(value[i])
-  #generate module line from arrays
+  #get current time
   current_time=time.localtime()
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
+  #check array validity
+  if(len(value)!=3):
+    #print error
+    print line
+    print value
+    #write to information file
+    fi=open(info_file_name,"a")
+    fi.write(str_time);    fi.write(" ")
+    fi.write(serialDev);   fi.write(" ")
+    fi.write(module);
+    fi.write(" error:|");
+    fi.write(line);        fi.write("|\n")
+    fi.close() #information file
+    continue
+  #generate module line from arrays
   line=module+";"+str_time+";"+str(iteration)
   line+=";"+value[2]
 #  for i in range(0,nb-1):
