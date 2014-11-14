@@ -8,12 +8,9 @@ import time
 import argparse
 
 ##set column names
-#colnames(t)=c("time","index","temperature","CO2","lamp")
+#colnames(t)=c("time","index","PID")
 
-#?	Alphasense NDIR
-#N	1281.1
-#T	26.6
-#V	 400
+#Alphasense PID
 
 #path and file name
 def get_file_name_base(module_name,current_time):
@@ -31,7 +28,7 @@ def get_info_file_name(current_time):
 #CLI arguments
 serialDev='/dev/ttyUSB0'
 fake='test.raw'
-module='NDIR_CO2'
+module='PID'
 current_time=time.localtime()
 info_file_name=get_info_file_name(current_time)
 file_name=get_data_file_name(module,current_time)
@@ -56,17 +53,13 @@ if(serialDev==fake): #test#
   print 'test' #test#
   ser=open(fake, 'r') #test#
 else:
-  ser=serial.Serial(serialDev, 19200, timeout=67)
+  ser=serial.Serial(serialDev, 9600, timeout=12)
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=4 #3 sensors and others
+nb=2 #1 sensors and others
 record=range(nb)
 value=range(nb)
-send=range(nb-1)
-send[0]='N'
-send[1]='T'
-send[2]='V'
 
 #get current time
 current_time=time.localtime()
@@ -93,33 +86,28 @@ if(serialDev==fake): #test#
   mode=fake
 else:
   mode='serial'
-print 'start writing/reading '+mode+' ...'
+print 'start reading '+mode+' ...'
 while(True): #loop on both sensors and time
-  for i in range(0,nb-1):
-    #ask for data
-## if(serialDev!=fake): #!test#
-    ser.write(send[i]+"\r")
-    #wait and get data
-    line=ser.readline()
-    #exit at end of file
-    if not line: break
-    #show
-    ##print "|",line,"|"
-    #write to raw file
-    fr=open(raw_file_name,"a")
-    fr.write(line)
-    fr.close()
-    #add sensor parameters in arrays
-    value[i]=line.replace("\r\n","")
-    record[i]=float(value[i])
+  #wait and get data
+  line=ser.readline()
   #exit at end of file
   if not line: break
+  #show
+  line=line.replace("\r\n","")
+  print "|",line,"|"
+  #write to raw file
+  fr=open(raw_file_name,"a")
+  fr.write(line)
+  fr.close()
+  #add sensor parameters in arrays
+#  value[i]=line.replace("\r\n","")
+#  record[i]=float(value[i])
   #generate module line from arrays
   current_time=time.localtime()
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
   line=module+";"+str_time+";"+str(iteration)
-  for i in range(0,nb-1):
-    line+=";"+value[i]
+#  for i in range(0,nb-1):
+#    line+=";"+value[i]
 #    line+=";"+str(record[i])
   line+="\n"
   print line
@@ -132,7 +120,7 @@ while(True): #loop on both sensors and time
   fo.close()
   #next record index
   iteration+=1
-  time.sleep(12)
+  time.sleep(0.5)
 
 if(serialDev==fake): #test#
   ser.close()
