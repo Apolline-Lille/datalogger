@@ -101,12 +101,13 @@ while(True): #loop on both sensors and time
   #add sensor parameters in arrays
   line=line.replace("\r\n","")
   value=line.split(";")
-  print value
+#  print value
 #  record[i]=float(value[i])
   #generate module line from arrays
   current_time=time.localtime()
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
   line=module+";"+str_time+";"+str(iteration)
+  line+=";"+value[2]
 #  for i in range(0,nb-1):
 #    line+=";"+value[i]
 #    line+=";"+str(record[i])
