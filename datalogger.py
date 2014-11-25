@@ -8,9 +8,9 @@ import time
 import argparse
 
 ##set column names
-#colnames(t)=c("time","index","PID")
+#colnames(t)=c("time","index","PAR")
 
-#Alphasense PID
+#solems PAR
 
 #path and file name
 def get_file_name_base(module_name,current_time):
