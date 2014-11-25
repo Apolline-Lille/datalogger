@@ -28,13 +28,13 @@ def get_info_file_name(current_time):
 #CLI arguments
 serialDev='/dev/ttyACM0'
 fake='test.raw'
-module='PID'
+module='PAR'
 current_time=time.localtime()
 info_file_name=get_info_file_name(current_time)
 file_name=get_data_file_name(module,current_time)
 raw_file_name=get_raw_file_name(module,current_time)
 parser = argparse.ArgumentParser(
-  description='log data from NDIR/CO2 sensor.'
+  description='log data from ArduinoDUE/PAR sensor.'
   +' At least, 3 files will be written:'
   +' 1. single information file (.info),'
   +' 2. one raw sensor ouput (.raw) file per day,'
@@ -57,7 +57,7 @@ else:
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=6 #1 sensors and others
+nb=6 #6 sensors
 record=range(nb)
 value=range(nb)
 
@@ -102,15 +102,15 @@ while(True): #loop on both sensors and time
   line=line.replace("\r\n","")
   value=line.split(";")
 #  print value
-#  record[i]=float(value[i])
   #get current time
   current_time=time.localtime()
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
   #check array validity
-  if(len(value)!=3):
+  if(len(value)!=(2+nb)):
     #print error
     print line
     print value
+    print len(value)
     #write to information file
     fi=open(info_file_name,"a")
     fi.write(str_time);    fi.write(" ")
@@ -122,9 +122,9 @@ while(True): #loop on both sensors and time
     continue
   #generate module line from arrays
   line=module+";"+str_time+";"+str(iteration)
-  line+=";"+value[2]
-#  for i in range(0,nb-1):
-#    line+=";"+value[i]
+  line+=";"+value[1]
+  for i in range(2,nb+2):
+    line+=";"+value[i]
 #    line+=";"+str(record[i])
   line+="\n"
   print line
