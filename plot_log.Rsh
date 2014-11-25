@@ -19,9 +19,13 @@ t$time=strptime(t$time,format="%Y/%m/%d %H:%M:%S")
 summary(t)
 
 pdf()
-plot(t$time,t$PAR4,col="red")
-plot(t$time,t$PAR5,col="green")
-plot(t$time,t$PAR6,col="blue")
+min=min(t$PAR4,t$PAR5,t$PAR6)
+max=max(t$PAR4,t$PAR5,t$PAR6)
+plot(t$time,t$PAR4,col="red"
+  ,ylim=c(min,max)
+  )
+lines(t$time,t$PAR5,col="green")
+lines(t$time,t$PAR6,col="blue")
 min=8123123;max=9123123
 h=hist(t$PAR6,xlim=c(min,max), breaks=seq(min,max,1000))
 #h
