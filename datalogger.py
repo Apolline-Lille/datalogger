@@ -57,7 +57,7 @@ else:
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=6 #6 sensors
+nb=8*2 #8 sensors
 record=range(nb)
 value=range(nb)
 
@@ -106,7 +106,7 @@ while(True): #loop on both sensors and time
   current_time=time.localtime()
   str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
   #check array validity
-  if(len(value)!=(2+nb)):
+  if(len(value)!=(3+nb)):
     #print error
     print line
     print value
@@ -123,7 +123,8 @@ while(True): #loop on both sensors and time
   #generate module line from arrays
   line=module+";"+str_time+";"+str(iteration)
   line+=";"+value[1]
-  for i in range(2,nb+2):
+  line+=";"+value[2]
+  for i in range(3,nb+3):
     line+=";"+value[i]
 #    line+=";"+str(record[i])
   line+="\n"
