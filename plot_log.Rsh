@@ -22,7 +22,7 @@ pdf()
 plot(t$time,t$PID)
 min=0;max=1023
 h=hist(t$PID,xlim=c(min,max), breaks=seq(min,max,1))
-h
+#h
 min=0;max=15
 h=hist(t$PID,xlim=c(min,max), breaks=seq(min,max,1))
 h
