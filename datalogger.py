@@ -92,7 +92,7 @@ fi=open(info_file_name,"a")
 fi.write("\n\n"+str_time)
 fi.write("datalogger."+version+".py\n")
 fi.write("running on "+hostname+"\n")
-fi.write(serialDev)
+fi.write(serialDev+"\n")
 fi.write(module)
 fi.close() #information file
 
