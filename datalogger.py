@@ -33,7 +33,7 @@ def get_data_file_name(module_name,current_time):
 def get_raw_file_name(module_name,current_time):
   return get_file_name_base(module_name+'_',current_time)+'.raw'
 
-def get_info_file_name(current_time):
+def get_info_file_name(current_time,hostname):
   return get_file_name_base(hostname+'_',current_time)+'.info'
 
 #CLI arguments
