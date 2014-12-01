@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
-version='v0.2.1'
+version='v0.2.2'
 
 import serial
 import string
+import os
 import time
 import argparse
 
@@ -13,8 +14,15 @@ import argparse
 #  "record")
 
 #path and file name
+def get_path_name_base(current_time):
+  path=time.strftime('%Y/%m/',current_time)
+  #path exist
+  if(not os.access(path,os.F_OK)):
+    os.mkdir(path)
+  return path
+
 def get_file_name_base(module_name,current_time):
-  return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
+  return get_path_name_base(current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
 
 def get_data_file_name(module_name,current_time):
   return get_file_name_base(module_name+'_',current_time)+'.txt'
