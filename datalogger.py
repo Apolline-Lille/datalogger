@@ -148,11 +148,11 @@ while(True): #loop on both sensors and time
   if(index==12): #new record stop
     #generate module line from arrays
     str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
-    line=module+" @ "+str_time+"\t"+str(iteration)
-    line+="\t"+str(value[1])
+    line=module+";"+str_time+";"+str(iteration)
+    line+=";"+str(value[1])
     for i in xrange(5,len(value)):
-      line+="\t"+value[i]
-    line+="\t"+str(record[index])
+      line+=";"+value[i]
+    line+=";"+str(record[index])
     line+="\n"
     print line
     #setup file name from date
