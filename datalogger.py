@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
-version='v0.3.0'
+version='v0.3.3'
 
 import serial
 import string
+import os
 import time
 import argparse
 
@@ -16,8 +17,15 @@ import argparse
 #V	 400
 
 #path and file name
+def get_path_name_base(current_time):
+  path=time.strftime('%Y/%m/',current_time)
+  #path exist
+  if(not os.access(path,os.F_OK)):
+    os.mkdir(path)
+  return path
+
 def get_file_name_base(module_name,current_time):
-  return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
+  return get_path_name_base(current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
 
 def get_data_file_name(module_name,current_time):
   return get_file_name_base(module_name+'_',current_time)+'.txt'
@@ -26,14 +34,15 @@ def get_raw_file_name(module_name,current_time):
   return get_file_name_base(module_name+'_',current_time)+'.raw'
 
 def get_info_file_name(current_time):
-  return get_file_name_base('',current_time)+'.info'
+  return get_file_name_base(hostname+'_',current_time)+'.info'
 
 #CLI arguments
 serialDev='/dev/ttyUSB0'
 fake='test.raw'
 module='NDIR_CO2'
+hostname='raspc2aN'
 current_time=time.localtime()
-info_file_name=get_info_file_name(current_time)
+info_file_name=get_info_file_name(current_time,hostname)
 file_name=get_data_file_name(module,current_time)
 raw_file_name=get_raw_file_name(module,current_time)
 parser = argparse.ArgumentParser(
@@ -74,11 +83,15 @@ str_time=time.strftime('%Y/%m/%d %H:%M:%S\n',current_time)
 print str_time
 
 #set info file name from date
-info_file_name=get_info_file_name(current_time)
+import platform
+hostname=platform.node()
+info_file_name=get_info_file_name(current_time,hostname)
 
 #write to information file
 fi=open(info_file_name,"a")
-fi.write(str_time)
+fi.write("\n\n"+str_time)
+fi.write("datalogger."+version+".py\n")
+fi.write("running on "+hostname+"\n")
 fi.write(serialDev)
 fi.write(module)
 fi.close() #information file
