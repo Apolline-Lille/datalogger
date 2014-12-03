@@ -5,6 +5,11 @@ ps aux | grep datalogger.py
 #kill process
 ##sudo kill 1234
 
+ls -lah /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A*-if00-port0
+lrwxrwxrwx 1 root root 13 Jan  1  1970 /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A9021UBC-if00-port0 -> ../../ttyUSB1
+lrwxrwxrwx 1 root root 13 Dec  3 16:38 /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A9021UXU-if00-port0 -> ../../ttyUSB2
+lrwxrwxrwx 1 root root 13 Jan  1  1970 /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AM01VPKY-if00-port0 -> ../../ttyUSB0
+
 exit
 
 #backup
