@@ -26,9 +26,11 @@ def get_info_file_name(current_time):
   return get_file_name_base('',current_time)+'.info'
 
 #CLI arguments
-serialDev='/dev/ttyACM0'
+serialDev='/dev/ttyUSB0'
 fake='test.raw'
-module='PAR'
+module='NO2nPID'
+nb=3*2 #3 sensors
+
 current_time=time.localtime()
 info_file_name=get_info_file_name(current_time)
 file_name=get_data_file_name(module,current_time)
@@ -57,7 +59,6 @@ else:
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=8*2 #8 sensors
 record=range(nb)
 value=range(nb)
 
