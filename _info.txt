@@ -1,7 +1,7 @@
 #start recording
 sudo echo 'sudo warmup'; sudo nohup ./datalogger.py --device /dev/ttyUSB0 &
 #check process is running
-ps aux | grep datalogger.py
+ps aux | grep --color datalogger
 #kill process
 ##sudo kill 1234
 
