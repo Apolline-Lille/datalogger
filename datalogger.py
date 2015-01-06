@@ -8,9 +8,9 @@ import time
 import argparse
 
 ##set column names
-#colnames(t)=c("time","index","PAR")
+#colnames(t)=c("time","index","MQ2gaz",...)
 
-#solems PAR
+#MQ2gaz, T, humidity, MQ9gaz, HCHO_COV, particle_low_pulse, particle_ratio, particle_concentration 
 
 #path and file name
 def get_file_name_base(module_name,current_time):
@@ -28,7 +28,7 @@ def get_info_file_name(current_time):
 #CLI arguments
 serialDev='/dev/ttyUSB0'
 fake='test.raw'
-module='ADC'
+module='UNO'
 current_time=time.localtime()
 info_file_name=get_info_file_name(current_time)
 file_name=get_data_file_name(module,current_time)
@@ -53,11 +53,11 @@ if(serialDev==fake): #test#
   print 'test' #test#
   ser=open(fake, 'r') #test#
 else:
-  ser=serial.Serial(serialDev, 9600, timeout=12)
+  ser=serial.Serial(serialDev, 9600, timeout=64)
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=3*2 #3 sensors
+nb=8 #5 sensors
 record=range(nb)
 value=range(nb)
 
@@ -100,7 +100,8 @@ while(True): #loop on both sensors and time
   fr.close()
   #add sensor parameters in arrays
   line=line.replace("\r\n","")
-  value=line.split(";")
+#  value=line.split(";")
+  value=line.split(",")
 #  print value
   #get current time
   current_time=time.localtime()
@@ -122,7 +123,6 @@ while(True): #loop on both sensors and time
     continue
   #generate module line from arrays
   line=module+";"+str_time+";"+str(iteration)
-  line+=";"+value[1]
   line+=";"+value[2]
   for i in range(3,nb+3):
     line+=";"+value[i]
