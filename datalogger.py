@@ -26,7 +26,7 @@ def get_info_file_name(current_time):
   return get_file_name_base('',current_time)+'.info'
 
 #CLI arguments
-serialDev='/dev/ttyUSB0'
+serialDev='/dev/ttyACM0'
 fake='test.raw'
 module='UNO'
 current_time=time.localtime()
