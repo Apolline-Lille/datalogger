@@ -1,9 +1,11 @@
 #!/bin/bash
 
-for dev in /dev/ttyUSB?
+for devbyid in /dev/serial/by-id/usb-*
 do
-  echo 'start logging '$dev
-  nohup ./datalogger.py --device $dev &
+  dev=`ls -lah $devbyid | tail -c 8` #e.g. ttyUSB0 or ttyACM0
+  dev=/dev/$dev
+  echo 'start logging '$dev'.'
+#  nohup ./datalogger.py --device $dev &
   sleep 1
 done
 
@@ -11,4 +13,4 @@ done
 sleep 2
 
 #check
-ps aux | grep datalogger.py
+ps aux | grep '.py' | grep datalogger --color
