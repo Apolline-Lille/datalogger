@@ -14,7 +14,7 @@ if(length(args)==0)
 file_name=args[1]
 
 t=read.table(file=file_name,sep=';')
-names(t)=c("module","time","iteration","CO2","temperature","LED")
+names(t)=c("module","time","iteration","particle1","particle2")
 t$time=strptime(t$time,format="%Y/%m/%d %H:%M:%S")
 
 #t=t[1:1024,]
@@ -24,7 +24,7 @@ summary(t)
 pdf()
 
 #CO2
-plot(t$time,t$CO2)
-plot(t$time,t$temperature)
+plot(t$time,t$particle1)
+plot(t$time,t$particle2)
 
 dev.off()
