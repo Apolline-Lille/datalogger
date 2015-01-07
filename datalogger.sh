@@ -24,6 +24,18 @@ do
     echo $dev" is AlphaSense CO2"
     datalogger=./datalogger_CO2.py
   fi
+  ##A9021 #WaspMote
+  if((`echo $devbyid | grep A9021 | wc -l`>0))
+  then
+    echo $dev" is WaspMote"
+    datalogger=./datalogger_wasp.py
+  fi
+  ##A?00 #MX3cK/ADC
+  if((`echo $devbyid | grep A.00 | wc -l`>0))
+  then
+    echo $dev" is PC2A,MX3cK/ADC"
+    datalogger=./datalogger_ADC_3.py
+  fi
   #start datalogger
   echo 'start logging '$dev'.'
   nohup $datalogger --device $dev &
@@ -36,3 +48,7 @@ sleep 2
 
 #check
 ps aux | grep '.py' | grep datalogger --color
+
+exit
+
+ls -lah /dev/serial/by-id/usb-*
