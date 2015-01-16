@@ -1,14 +1,38 @@
 #!/bin/bash
 
-for dev in /dev/ttyUSB?
+for devbyid in /dev/serial/by-id/usb-*
 do
-  echo 'start logging '$dev
-  nohup ./datalogger.py --device $dev &
+  dev=`ls -lah $devbyid | tail -c 8` #e.g. ttyUSB0 or ttyACM0
+  dev=/dev/$dev
+  #switch datalogger depending on device
+#  echo $devbyid
+  ##Arduino #UNO
+  if((`echo $devbyid | grep Arduino | wc -l`>0))
+  then
+    echo $dev" is Arduino #UNO"
+    datalogger=./datalogger_UNO.py
+  fi
+  ##Prolific #DYLOS
+  if((`echo $devbyid | grep Prolific | wc -l`>0))
+  then
+    echo $dev" is Prolific #DYLOS"
+    datalogger=./datalogger_DYLOS.py
+  fi
+  ##AM01 #AlphaSense CO2
+  if((`echo $devbyid | grep AM01 | wc -l`>0))
+  then
+    echo $dev" is AlphaSense CO2"
+    datalogger=./datalogger_CO2.py
+  fi
+  #start datalogger
+  echo 'start logging '$dev'.'
+  nohup $datalogger --device $dev &
   sleep 1
+  echo
 done
 
 #wait
 sleep 2
 
 #check
-ps aux | grep datalogger.py
+ps aux | grep '.py' | grep datalogger --color
