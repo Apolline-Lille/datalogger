@@ -4,7 +4,6 @@ version='v0.3.3'
 
 import serial
 import string
-import os
 import time
 import argparse
 
