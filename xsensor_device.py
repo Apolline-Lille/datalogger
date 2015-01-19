@@ -52,7 +52,28 @@ def get_serial_device_name(path):
   return device_name[i]
 
 #script call
+import argparse
 if __name__ == "__main__":
-  device_path,device_name=get_serial_pathNdevice_names()
-  for i in range(0,len(device_name)):
-    print device_name[i], device_path[i]
+  #CLI arguments
+  serialDev='' #e.g. '/dev/ttyUSB0'
+  parser = argparse.ArgumentParser(
+    description='show Xsensor device name either all device list or a specific device from /dev/tty????'
+      +'   e.g. ./xsensor_device.py'
+      +'or e.g. ./xsensor_device.py --device /dev/ttyUSB0'
+    )
+  parser.add_argument('-d','--device',default=serialDev, help='USB device name (e.g. /dev/ttyUSB0)')
+  parser.add_argument('-v','--version',action='version',version='%(prog)s '+version)
+  args = parser.parse_args()
+
+  #--device CLI argument
+  serialDev=args.device
+
+  #print out device(s)
+  if(len(serialDev)==0):
+  ##device list
+    device_path,device_name=get_serial_pathNdevice_names()
+    for i in range(0,len(device_name)):
+      print device_name[i], device_path[i]
+  else:
+  ##specified device
+    print get_serial_device_name(serialDev)
