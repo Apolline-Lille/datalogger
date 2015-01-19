@@ -7,32 +7,26 @@ import string
 import time
 import argparse
 
+#path and device name
+import xsensor_device
+#path and file name
+import xsensor_path
+
 ##set column names
 #colnames(t)=c("time","index","MQ2gaz",...)
 
 #MQ2gaz, T, humidity, MQ9gaz, HCHO_COV, particle_low_pulse, particle_ratio, particle_concentration 
 
-#path and file name
-def get_file_name_base(module_name,current_time):
-  return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
-
-def get_data_file_name(module_name,current_time):
-  return get_file_name_base(module_name+'_',current_time)+'.txt'
-
-def get_raw_file_name(module_name,current_time):
-  return get_file_name_base(module_name+'_',current_time)+'.raw'
-
-def get_info_file_name(current_time):
-  return get_file_name_base('',current_time)+'.info'
 
 #CLI arguments
 serialDev='/dev/ttyACM0'
 fake='test.raw'
-module='UNO'
+module='UNO'+'_'+xsensor_device.get_serial_device_name(serialDev)
+hostname='raspc2aN'
 current_time=time.localtime()
-info_file_name=get_info_file_name(current_time)
-file_name=get_data_file_name(module,current_time)
-raw_file_name=get_raw_file_name(module,current_time)
+info_file_name=xsensor_path.get_info_file_name(current_time,hostname)
+file_name=xsensor_path.get_data_file_name(module,current_time)
+raw_file_name=xsensor_path.get_raw_file_name(module,current_time)
 parser = argparse.ArgumentParser(
   description='log data from ArduinoDUE/PAR sensor.'
   +' At least, 3 files will be written:'
@@ -67,7 +61,9 @@ str_time=time.strftime('%Y/%m/%d %H:%M:%S\n',current_time)
 print str_time
 
 #set info file name from date
-info_file_name=get_info_file_name(current_time)
+import platform
+hostname=platform.node()
+info_file_name=xsensor_path.get_info_file_name(current_time,hostname)
 
 #write to information file
 fi=open(info_file_name,"a")
@@ -77,8 +73,8 @@ fi.write(module);      fi.write(" open\n")
 fi.close() #information file
 
 #set both raw and data file names from both module and date
-file_name=get_data_file_name(module,current_time)
-raw_file_name=get_raw_file_name(module,current_time)
+file_name=xsensor_path.get_data_file_name(module,current_time)
+raw_file_name=xsensor_path.get_raw_file_name(module,current_time)
 
 iteration=0
 
@@ -130,8 +126,8 @@ while(True): #loop on both sensors and time
   line+="\n"
   print line
   #setup file name from date
-  file_name=get_data_file_name(module,current_time)
-  raw_file_name=get_raw_file_name(module,current_time)
+  file_name=xsensor_path.get_data_file_name(module,current_time)
+  raw_file_name=xsensor_path.get_raw_file_name(module,current_time)
   #write to file
   fo=open(file_name,"a")
   fo.write(line)
