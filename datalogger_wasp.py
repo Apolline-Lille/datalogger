@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.2.3'
+version='v0.3.9'
 
 import serial
 import string
@@ -20,7 +20,7 @@ import xsensor_path
 #CLI arguments
 serialDev='/dev/ttyUSB0'
 fake='test.raw'
-module='B12345'+'_'+xsensor_device.get_serial_device_name(serialDev)
+module='B12345'+'_'+'A902NNNN'
 hostname='raspc2aN'
 current_time=time.localtime()
 info_file_name=xsensor_path.get_info_file_name(current_time,hostname)
@@ -82,7 +82,9 @@ fi.close() #information file
 
 #set module name
 values=line.split('|')
-module=values[0]
+moduleId=values[0]
+#module=(module.split('_'))[0] #from generic for Help
+module=moduleId+'_'+xsensor_device.get_serial_device_name(serialDev)
 
 #set both raw and data file names from both module and date
 file_name=xsensor_path.get_data_file_name(module,current_time)

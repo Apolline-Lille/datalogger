@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.3.1'
+version='v0.3.9'
 
 import serial
 import string
@@ -20,7 +20,7 @@ import xsensor_path
 #CLI arguments
 serialDev='/dev/ttyUSB0'
 fake='test.raw'
-module='DYLOS'+'_'+xsensor_device.get_serial_device_name(serialDev)
+module='DYLOS'+'_'+'dylosN'
 hostname='raspc2aN'
 current_time=time.localtime()
 info_file_name=xsensor_path.get_info_file_name(current_time,hostname)
@@ -63,6 +63,10 @@ print str_time
 import platform
 hostname=platform.node()
 info_file_name=xsensor_path.get_info_file_name(current_time,hostname)
+
+#set module name
+module=(module.split('_'))[0] #from generic for Help
+module=module+'_'+xsensor_device.get_serial_device_name(serialDev)
 
 #write to information file
 fi=open(info_file_name,"a")
