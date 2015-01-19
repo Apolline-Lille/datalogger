@@ -21,9 +21,9 @@ def get_serial_pathNdevice_names():
   for i in range(3,len(list)):
   #  print list[i]
     tmp=list[i].split(" ")
-    device_name.append(tmp[8])
+    device_name.append(tmp[9]) #8
   #  print device_name[i-3]
-    device_path.append(tmp[10])
+    device_path.append(tmp[11])#10
   #  print device_path[i-3]
 
   #pack device name

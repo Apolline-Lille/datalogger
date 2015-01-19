@@ -122,7 +122,7 @@ while(True): #loop on both sensors and time
     continue
   #get information
   values=line.split('|')
-  module=values[0]
+  moduleId=values[0]
   index=int(values[2]) #sensor, see colnames
   if(index==1): #new record start
     #get record time
@@ -139,7 +139,7 @@ while(True): #loop on both sensors and time
   if(index==12): #new record stop
     #generate module line from arrays
     str_time=time.strftime('%Y/%m/%d %H:%M:%S',current_time)
-    line=module+";"+str_time+";"+str(iteration)
+    line=moduleId+";"+str_time+";"+str(iteration)
     line+=";"+str(value[1])
     for i in xrange(5,len(value)):
       line+=";"+value[i]
