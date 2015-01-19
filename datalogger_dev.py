@@ -1,10 +1,9 @@
 #!/usr/bin/python
 
-version='v0.0.0'
+version='v0.0.1'
 
 import string
 import subprocess
-import argparse
 
 ##path and file name
 #def get_file_name_base(module_name,current_time):
