@@ -17,8 +17,14 @@ list=subprocess.check_output(["ls","-lah","/dev/serial/by-id"])
 list=list.splitlines()
 #print list
 
+device_name=[]
+device_path=[]
 for i in range(3,len(list)):
   #print list[i]
   tmp=list[i].split(" ")
-  print tmp[9], tmp[11]
+  device_name.append(tmp[9])
+  device_path.append(tmp[11])
+
+for i in range(0,len(device_name)):
+  print device_name[i], device_path[i]
 
