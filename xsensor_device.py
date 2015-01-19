@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.0.2'
+version='v0.0.3'
 
 import string
 import subprocess
@@ -46,9 +46,10 @@ def get_serial_pathNdevice_names():
 
 def get_serial_device_name(path):
   device_path,device_name=get_serial_pathNdevice_names()
-#BUG TODO:
-  #while(path==device_path)
-  return device_name[0]
+  i=0
+  while(path.rfind(device_path[i])!=0):
+    i+=1
+  return device_name[i]
 
 #script call
 if __name__ == "__main__":
