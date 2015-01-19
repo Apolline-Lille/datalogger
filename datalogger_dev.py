@@ -3,7 +3,6 @@
 version='v0.0.0'
 
 import string
-import os
 import subprocess
 import argparse
 
@@ -12,8 +11,16 @@ import argparse
 #  return time.strftime('%Y/%m/',current_time)+module_name+time.strftime('%Y_%m_%d',current_time)
 
 
-list=subprocess.check_output(["ls","-lah"])
 list=subprocess.check_output(["ls","-lah","/dev/serial/by-id"])
-#list=subprocess.check_output(["bash","ls","-lah","/dev/serial/by-id/usb-*"])
+#print list
 
+list=list.splitlines()
+#print list
+
+for i in range(3,len(list)):
+  print list[i]
+
+exit()
+
+list=list.split(" ")
 print list
