@@ -18,9 +18,7 @@ list=list.splitlines()
 #print list
 
 for i in range(3,len(list)):
-  print list[i]
+  #print list[i]
+  tmp=list[i].split(" ")
+  print tmp[9], tmp[11]
 
-exit()
-
-list=list.split(" ")
-print list
