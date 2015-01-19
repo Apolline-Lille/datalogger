@@ -8,6 +8,8 @@ import os
 import time
 import argparse
 
+import xsensor_device
+
 ##set column names
 #colnames(t)=c("time","index","temperature","CO2","lamp")
 
@@ -21,7 +23,7 @@ def get_path_name_base(current_time):
   path=time.strftime('%Y/%m/',current_time)
   #path exist
   if(not os.access(path,os.F_OK)):
-    os.mkdir(path)
+    os.makedirs(path)
   return path
 
 def get_file_name_base(module_name,current_time):
@@ -39,7 +41,7 @@ def get_info_file_name(current_time,hostname):
 #CLI arguments
 serialDev='/dev/ttyUSB0'
 fake='test.raw'
-module='NDIR_CO2'
+module='NDIRwCO2'+'_'+xsensor_device.get_serial_device_name(serialDev)
 hostname='raspc2aN'
 current_time=time.localtime()
 info_file_name=get_info_file_name(current_time,hostname)
