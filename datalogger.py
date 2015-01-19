@@ -7,6 +7,8 @@ import string
 import time
 import argparse
 
+import xsensor_device
+
 ##set column names
 #colnames(t)=c("time","index","particle1","particle2")
 
@@ -28,7 +30,7 @@ def get_info_file_name(current_time):
 #CLI arguments
 serialDev='/dev/ttyUSB0'
 fake='test.raw'
-module='DYLOS'
+module='DYLOS'+'_'+xsensor_device.get_serial_device_name(serialDev)
 current_time=time.localtime()
 info_file_name=get_info_file_name(current_time)
 file_name=get_data_file_name(module,current_time)

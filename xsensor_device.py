@@ -33,7 +33,7 @@ def get_serial_pathNdevice_names():
     ##Dylos
     template='Prolific_Technology_Inc._USB-Serial_Controller_D'
     if(device_name[i].rfind(template)==0):
-      device_name[i]='DYLOS'
+      device_name[i]='dylos0'
     ##FTDI_FT232R: WaspMote, AlphaSenseCO2, MX3cK/ADC
     template='FTDI_FT232R_USB_UART_'
     if(device_name[i].rfind(template)==0):
@@ -41,6 +41,12 @@ def get_serial_pathNdevice_names():
   #  print device_name[i], device_path[i]
 
   return device_path,device_name
+
+def get_serial_device_name(path):
+  device_path,device_name=get_serial_pathNdevice_names()
+#BUG TODO:
+  #while(path==device_path)
+  return device_name[0]
 
 #script call
 if __name__ == "__main__":
