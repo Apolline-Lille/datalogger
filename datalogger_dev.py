@@ -33,6 +33,8 @@ for i in range(0,len(device_name)):
   if(device_name[i].rfind(template)==0):
     device_name[i]='DYLOS'
   #FTDI_FT232R: WaspMote, AlphaSenseCO2, MX3cK/ADC
-#  template='FTDI_FT232R_USB_UART_'
+  template='FTDI_FT232R_USB_UART_'
+  if(device_name[i].rfind(template)==0):
+    device_name[i]=device_name[i].replace(template,'')
   print device_name[i], device_path[i]
 
