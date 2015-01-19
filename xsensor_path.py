@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.0.0'
+version='v0.1.0'
 
 import string
 import os
