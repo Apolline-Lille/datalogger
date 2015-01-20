@@ -21,9 +21,9 @@ def get_serial_pathNdevice_names():
   for i in range(3,len(list)):
   #  print list[i]
     tmp=list[i].split(" ")
-    device_name.append(tmp[9]) #8
+    device_name.append(tmp[11]) #8
   #  print device_name[i-3]
-    device_path.append(tmp[11])#10
+    device_path.append(tmp[13])#10
   #  print device_path[i-3]
 
   #pack device name
@@ -36,6 +36,10 @@ def get_serial_pathNdevice_names():
     template='Prolific_Technology_Inc._USB-Serial_Controller_D'
     if(device_name[i].rfind(template)==0):
       device_name[i]='dylos0'
+    ##ArduinoUNO
+    template='Arduino__www.arduino.cc__0043_753383235353515122C'
+    if(device_name[i].rfind(template)==0):
+      device_name[i]='UNO0'
     ##FTDI_FT232R: WaspMote, AlphaSenseCO2, MX3cK/ADC
     template='FTDI_FT232R_USB_UART_'
     if(device_name[i].rfind(template)==0):
