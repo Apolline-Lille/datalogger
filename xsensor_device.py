@@ -8,7 +8,7 @@ import subprocess
 #path and device name
 def get_serial_pathNdevice_names():
   #list serial devices by id (e.g. POSIX OS)
-  list=subprocess.check_output(["ls","-lah","/dev/serial/by-id"])
+  list=subprocess.check_output(["ls","-l","--time-style=iso","/dev/serial/by-id"])
 #  print list
 
   #make list as a list
@@ -18,13 +18,13 @@ def get_serial_pathNdevice_names():
   #get device and name
   device_name=[]
   device_path=[]
-  for i in range(3,len(list)):
+  for i in range(1,len(list)):
   #  print list[i]
     tmp=list[i].split(" ")
-    device_name.append(tmp[8])
-  #  print device_name[i-3]
-    device_path.append(tmp[10])
-  #  print device_path[i-3]
+    device_name.append(tmp[7])
+  #  print device_name[i-1]
+    device_path.append(tmp[9])
+  #  print device_path[i-1]
 
   #pack device name
   for i in range(0,len(device_name)):
