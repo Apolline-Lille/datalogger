@@ -29,13 +29,24 @@ def get_serial_pathNdevice_names():
   #pack device name
   for i in range(0,len(device_name)):
     #clean name
-    device_name[i]=device_name[i].strip('usb-ifport0')
-    device_path[i]='/dev/'+device_path[i].strip('../../')
+    device_name[i]=device_name[i].replace('usb-','')
+    device_name[i]=device_name[i].replace('if','')
+    device_name[i]=device_name[i].replace('port','')
+    device_name[i]=device_name[i].rstrip('0')
+    device_name[i]=device_name[i].replace('-','')
+    device_path[i]='/dev/'+device_path[i].replace('../../','')
     #specific name cleaning
     ##Dylos
     template='Prolific_Technology_Inc._USB-Serial_Controller_D'
     if(device_name[i].rfind(template)==0):
       device_name[i]='dylos0'
+    ##ArduinoUNO
+   #usb-Arduino__www.arduino.cc__0043_5533330393435190F171-if00
+    template='Arduino__www.arduino.cc__0043_' #take last 8 characters as for others below
+    if(device_name[i].rfind(template)==0):
+    # device_name[i]='UNO0'
+      device_name[i]=device_name[i].replace('Arduino__www.arduino.cc__0043_','')
+##      device_name[i]=device_name[i].tail(8) #last 8 characters
     ##FTDI_FT232R: WaspMote, AlphaSenseCO2, MX3cK/ADC
     template='FTDI_FT232R_USB_UART_'
     if(device_name[i].rfind(template)==0):
