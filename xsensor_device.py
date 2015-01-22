@@ -30,15 +30,15 @@ def get_serial_pathNdevice_names():
   for i in range(0,len(device_name)):
     #clean name
     device_name[i]=device_name[i].replace('usb-','')
-    device_name[i]=device_name[i].replace('if','')
-    device_name[i]=device_name[i].replace('port','')
-    device_name[i]=device_name[i].rstrip('0')
+    device_name[i]=device_name[i].replace('if00','')
+    device_name[i]=device_name[i].replace('port0','')
     device_name[i]=device_name[i].replace('-','')
+    #print device_name[i]
     device_path[i]='/dev/'+device_path[i].replace('../../','')
     #specific name cleaning
     ##Dylos
-    template='Prolific_Technology_Inc._USB-Serial_Controller_D'
-    if(device_name[i].rfind(template)==0):
+    template='Prolific_Technology_Inc._USBSerial_Controller_D'
+    if(device_name[i].find(template)==0):
       device_name[i]='dylos0'
     ##ArduinoUNO
     template='Arduino__www.arduino.cc__0043_' #take last 8 characters as for others below
