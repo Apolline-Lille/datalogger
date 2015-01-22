@@ -41,12 +41,10 @@ def get_serial_pathNdevice_names():
     if(device_name[i].rfind(template)==0):
       device_name[i]='dylos0'
     ##ArduinoUNO
-   #usb-Arduino__www.arduino.cc__0043_5533330393435190F171-if00
     template='Arduino__www.arduino.cc__0043_' #take last 8 characters as for others below
     if(device_name[i].rfind(template)==0):
-    # device_name[i]='UNO0'
       device_name[i]=device_name[i].replace('Arduino__www.arduino.cc__0043_','')
-##      device_name[i]=device_name[i].tail(8) #last 8 characters
+      device_name[i]=device_name[i][-8:] #last 8 characters
     ##FTDI_FT232R: WaspMote, AlphaSenseCO2, MX3cK/ADC
     template='FTDI_FT232R_USB_UART_'
     if(device_name[i].rfind(template)==0):
