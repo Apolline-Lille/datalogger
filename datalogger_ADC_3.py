@@ -15,7 +15,7 @@ import xsensor_path
 ##set column names
 #colnames(t)=c("time","index","NO2_1","NO2_2","PID",...)
 
-#ADC 3 sensors
+#ADC 8 sensors
 
 #CLI arguments
 serialDev='/dev/ttyUSB0'
@@ -27,7 +27,7 @@ info_file_name=xsensor_path.get_info_file_name(current_time,hostname)
 file_name=xsensor_path.get_data_file_name(module,current_time)
 raw_file_name=xsensor_path.get_raw_file_name(module,current_time)
 parser = argparse.ArgumentParser(
-  description='log data from ArduinoDUE/PAR sensor.'
+  description='log data from Cerebot/ADC sensor.'
   +' At least, 3 files will be written:'
   +' 1. single information file (.info),'
   +' 2. one raw sensor ouput (.raw) file per day,'
@@ -46,11 +46,11 @@ if(serialDev==fake): #test#
   print 'test' #test#
   ser=open(fake, 'r') #test#
 else:
-  ser=serial.Serial(serialDev, 9600, timeout=12)
+  ser=serial.Serial(serialDev, 9600, timeout=123)
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=3*2 #3 sensors
+nb=8*2 #3 sensors
 record=range(nb)
 value=range(nb)
 
