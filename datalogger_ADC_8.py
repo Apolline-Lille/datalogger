@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.3.9'
+version='v0.4.0'
 
 import serial
 import string
@@ -15,7 +15,7 @@ import xsensor_path
 ##set column names
 #colnames(t)=c("time","index","NO2_1","NO2_2","PID",...)
 
-#ADC 3 sensors
+#ADC 8 sensors
 
 #CLI arguments
 serialDev='/dev/ttyUSB0'
@@ -50,7 +50,7 @@ else:
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=3*2 #3 sensors
+nb=8*2 #8 sensors
 record=range(nb)
 value=range(nb)
 
