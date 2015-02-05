@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.3.9'
+version='v0.4.1'
 
 import serial
 import string
@@ -12,10 +12,15 @@ import xsensor_device
 #path and file name
 import xsensor_path
 
+#ADC 6 sensors
 ##set column names
-#colnames(t)=c("time","index","NO2_1","NO2_2","PID",...)
-
-#ADC 8 sensors
+colnames='colnames(t)=c("time",     \
+  "index","indexOfModule",          \
+  "temperature",                    \
+  "CO_1","CO_1V","CO_2","CO_2V",    \
+  "NO_1","NO_1V","NO_2","NO_2V",    \
+  "NO2_1","NO2_1V","NO2_2","NO2_2V" \
+  )'
 
 #CLI arguments
 serialDev='/dev/ttyUSB0'
@@ -35,6 +40,7 @@ parser = argparse.ArgumentParser(
  ,epilog='example: %(prog)s --device '+serialDev
   +'  #will write e.g. module #'+module+' data as 1."'
   +info_file_name+'", 2."'+file_name+'" and 3."'+raw_file_name+'" files.'
+  +' R table: '+colnames
   )
 parser.add_argument('-d','--device',default=serialDev, help='USB device name or '+fake+' (e.g. '+serialDev+')')
 parser.add_argument('-v','--version',action='version',version='%(prog)s '+version)
@@ -50,7 +56,7 @@ else:
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=8*2 #3 sensors
+nb=6*2 #3 sensors
 record=range(nb)
 value=range(nb)
 
@@ -73,6 +79,7 @@ fi=open(info_file_name,"a")
 fi.write(str_time);    fi.write(" ")
 fi.write(serialDev);   fi.write(" ")
 fi.write(module);      fi.write(" open\n")
+fi.write(colnames);    fi.write(" #R table\n")
 fi.close() #information file
 
 #set both raw and data file names from both module and date
