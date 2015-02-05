@@ -50,7 +50,7 @@ else:
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=8*2 #8 sensors
+nb=6*2 #6 sensors
 record=range(nb)
 value=range(nb)
 
