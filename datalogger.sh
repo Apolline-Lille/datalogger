@@ -34,7 +34,7 @@ do
   if((`echo $devbyid | grep A.00 | wc -l`>0))
   then
     echo $dev" is PC2A,MX3cK/ADC"
-    datalogger=./datalogger_ADC_3.py
+    datalogger=./datalogger_ADC_6.py
   fi
   #start datalogger
   echo 'start logging '$dev'.'
