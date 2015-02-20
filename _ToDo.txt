@@ -1,0 +1,5 @@
+to do:
+
+_ add "test" on command line option (--test) and in file names (_test_).
+_ merge rpic2a1 dev_name (v0.3.9) AND col_names (v0.4.1) and create master merge (v0.5.0).
+

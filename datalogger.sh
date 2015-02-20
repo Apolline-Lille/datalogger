@@ -33,8 +33,20 @@ do
   ##A?00 #MX3cK/ADC
   if((`echo $devbyid | grep A.00 | wc -l`>0))
   then
-    echo $dev" is PC2A,MX3cK/ADC"
+    echo $dev" is PC2A,MX3cK/ADC 6x"
     datalogger=./datalogger_ADC_6.py
+  fi
+  ##A?00 #MX3cK/ADC 2 sensors
+  if((`echo $devbyid | grep A.00 | grep -e TR7 -e ZOC | wc -l`>0))
+  then
+    echo $dev" is PC2A,MX3cK/ADC 2x"
+    datalogger=./datalogger_ADC_2.py
+  fi
+  ##A?00 #MX3cK/ADC 4 sensors
+  if((`echo $devbyid | grep A.00 | grep 4cv | wc -l`>0))
+  then
+    echo $dev" is PC2A,MX3cK/ADC 4x"
+    datalogger=./datalogger_ADC_4.py
   fi
   #start datalogger
   echo 'start logging '$dev'.'
