@@ -12,7 +12,7 @@ import xsensor_device
 #path and file name
 import xsensor_path
 
-#ADC 1 sensors
+#ADC 2 sensors
 ##set column names
 colnames='colnames(t)=c("time",     \
   "index","indexOfModule",          \
@@ -54,7 +54,7 @@ else:
 print 'pack module lines from ', serialDev
 
 #sensor parameter arrays
-nb=1*2 #1 sensors
+nb=2*2 #2 sensors
 record=range(nb)
 value=range(nb)
 
